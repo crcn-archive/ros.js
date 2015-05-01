@@ -1,4 +1,5 @@
 var expect       = require("expect.js");
+var _            = require("highland");
 var ros          = require("../lib");
 var mesh         = require("mesh");
 var EventEmitter = require("events").EventEmitter;
@@ -68,6 +69,46 @@ describe(__filename + "#", function() {
       _i++;
     }).on("end", function() {
       expect(_i).to.be(0);
+      next();
+    });
+  });
+
+  it("can run a tail on a remote operation stream", function(next) {
+    var em = new EventEmitter();
+    var bus = ros(em.on.bind(em, "message"), em.emit.bind(em, "message"), mesh.tailable(mesh.limit(1, mesh.wrap(function(operation, next) {
+      next(void 0, operation);
+    })), function() {
+      return true;
+    }));
+
+    var ops;
+
+    var tail = bus(mesh.op("tail"))
+    .pipe(_.pipeline(_.collect))
+    .on("data", function(data) {
+      ops = data;
+    });
+
+    bus(mesh.op("insert"));
+    bus(mesh.op("insert"));
+    bus(mesh.op("insert"));
+    bus(mesh.op("insert")).on("end", function() {
+      tail.end();
+      setTimeout(function() {
+        expect(ops.length).to.be(4);
+        next();
+      }, 10);
+    });
+  });
+
+  it("removes an operation that has ended", function(next) {
+    var em = new EventEmitter();
+    var bus = ros(em.on.bind(em, "message"), em.emit.bind(em, "message"), mesh.wrap(function(operation, next) {
+      next(void 0, operation);
+      next(void 0, operation);
+    }));
+
+    bus(mesh.op("load")).on("data", function() {
       next();
     });
   });

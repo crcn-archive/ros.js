@@ -1,6 +1,6 @@
 {
   "name": "ros",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "remote operation stream",
   "main": "./lib/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
+    "highland": "^2.4.0",
     "mesh": "^1.0.50",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
