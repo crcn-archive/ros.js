@@ -1,0 +1,41 @@
+{
+  "name": "ros",
+  "version": "1.0.0",
+  "description": "remote operation stream",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mojo-js/ros.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mojo-js/ros.js/issues"
+  },
+  "homepage": "https://github.com/mojo-js/ros.js",
+  "devDependencies": {
+    "browserify": "^10.0.0",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.11",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-istanbul": "^0.8.1",
+    "gulp-jscs": "^1.6.0",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
+    "gulp-plumber": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0",
+    "mesh": "^1.0.50",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "yargs": "^3.8.0"
+  },
+  "dependencies": {
+    "mesh": "^1.0.50",
+    "obj-stream": "0.0.23",
+    "xtend": "^4.0.0"
+  }
+}
