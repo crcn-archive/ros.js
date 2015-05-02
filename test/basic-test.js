@@ -112,4 +112,27 @@ describe(__filename + "#", function() {
       next();
     });
   });
+
+  it("can emit the same operation to multiple clients", function(next) {
+    var i = 0;
+
+    var em = new EventEmitter();
+    var bus = ros(em.on.bind(em, "message"), em.emit.bind(em, "message"), mesh.wrap(function(operation, next) {
+      i++;
+      next(void 0, operation);
+    }));
+
+    var em2 = new EventEmitter();
+    var bus2 = ros(em2.on.bind(em2, "message"), em2.emit.bind(em2, "message"), mesh.wrap(function(operation, next) {
+      i++;
+      next(void 0, operation);
+    }));
+
+    var bus3 = mesh.parallel(bus, bus2);
+
+    bus3(mesh.op("load")).on("end", function() {
+      expect(i).to.be(2);
+      next();
+    })
+  });
 });
