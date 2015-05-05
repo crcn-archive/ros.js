@@ -1,6 +1,6 @@
 {
   "name": "ros",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "remote operation stream",
   "main": "./lib/index.js",
   "scripts": {

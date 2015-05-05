@@ -135,4 +135,24 @@ describe(__filename + "#", function() {
       next();
     })
   });
+
+  xit("doesn't re-emit the same incomming operation", function(next) {
+    var i = 0;
+    var em = new EventEmitter();
+    var bus = ros(em.on.bind(em, "message"), em.emit.bind(em, "message"), mesh.wrap(function(operation, next) {
+      i++;
+      next(void 0, operation);
+    }));
+
+    bus = mesh.tailable(bus);
+    bus(mesh.op("tail")).pipe(mesh.open(bus));
+
+
+    em.emit("message", mesh.op("abba"));
+
+    setTimeout(function() {
+      expect(i).to.be(0);
+      return next();
+    }, 1);
+  });
 });
